@@ -3,6 +3,7 @@ import SwiftUI
 /// Vigil — a menu-bar utility that keeps the Mac awake and can jiggle the cursor.
 @main
 struct VigilApp: App {
+    @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     @StateObject private var state = AppState()
 
     var body: some Scene {

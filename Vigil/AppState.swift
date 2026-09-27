@@ -118,9 +118,9 @@ final class AppState: ObservableObject {
         return "On"
     }
 
+    /// Open eye while keeping the Mac awake; closed (slashed) eye when idle or paused.
     var menuBarSymbol: String {
-        if isPausedForBattery { return "eye.slash" }
-        return power.isActive ? "eye.fill" : "eye"
+        power.isActive ? "eye.fill" : "eye.slash"
     }
 
     var menuBarRemaining: String? {

@@ -28,6 +28,7 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: io.github.andrii-habchak.Vigil
         PRODUCT_NAME: Vigil
         GENERATE_INFOPLIST_FILE: YES
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         # Menu-bar agent app: no Dock icon, no main window.
         INFOPLIST_KEY_LSUIElement: YES
 

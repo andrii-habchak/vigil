@@ -8,12 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		028A0AD2ECDEB85AF781510C /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35562A0E504E5570F755AC2 /* NotificationManager.swift */; };
+		0FBE101C48B281CA2A8A44C7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 827BB30803A8F9370287E8BA /* Assets.xcassets */; };
 		1220C140EED4557A1F5F58C3 /* JiggleMathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A216D5D75FC1C12B00EA579F /* JiggleMathTests.swift */; };
 		1DB290112CFBD71909B1C727 /* JiggleMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33BD436776316133BD9BEC7 /* JiggleMath.swift */; };
 		2718FAFE8DEDCA9DE112205C /* Weekday.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA62B82C6ECAF91DF0644175 /* Weekday.swift */; };
 		28231BA7CC5DCA7827A86C69 /* SessionMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E109CE26E9919B18E5204B2 /* SessionMath.swift */; };
 		298A81C20F69881F7F0C1051 /* BatteryMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7BA1FF4D54E88AAEBD64AF /* BatteryMonitor.swift */; };
 		2F8D696D67288A29A125572C /* KeepAwakeDecisionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1B93ED0EEBF0E840D56151 /* KeepAwakeDecisionTests.swift */; };
+		300B0FF924E1855F9AEBA70A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F21EC18DEF6DD1419C77CD /* AppDelegate.swift */; };
 		429E600BDA33C64A8B11E21A /* ScheduleEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D470B5E801CF3D0EEF1934 /* ScheduleEvaluator.swift */; };
 		4690FEE235F0FEF5EA459599 /* JiggleMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33BD436776316133BD9BEC7 /* JiggleMath.swift */; };
 		4A11EBE39ADBFAF8B72F00DC /* Weekday.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA62B82C6ECAF91DF0644175 /* Weekday.swift */; };
@@ -54,6 +56,7 @@
 		0D553674B7BB3EDDAB8A27B4 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		0E992FE45E634A1DD98B8641 /* VigilTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VigilTests.swift; sourceTree = "<group>"; };
 		18D470B5E801CF3D0EEF1934 /* ScheduleEvaluator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEvaluator.swift; sourceTree = "<group>"; };
+		19F21EC18DEF6DD1419C77CD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		35D008F4F4032B0D87E52B11 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		4E109CE26E9919B18E5204B2 /* SessionMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionMath.swift; sourceTree = "<group>"; };
 		56C72E461A638DD08D0E0EF1 /* PowerAssertionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerAssertionManager.swift; sourceTree = "<group>"; };
@@ -63,6 +66,7 @@
 		6635157D1BA2028861CAB075 /* ScheduleEvaluatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEvaluatorTests.swift; sourceTree = "<group>"; };
 		6691AAECD6D79A420EF228C6 /* KeepAwakeDecision.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeepAwakeDecision.swift; sourceTree = "<group>"; };
 		6ACE6D2416F4F1A6C28712FC /* SessionMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionMode.swift; sourceTree = "<group>"; };
+		827BB30803A8F9370287E8BA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8370566D79FEAC6242798824 /* BatteryGuardLogicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryGuardLogicTests.swift; sourceTree = "<group>"; };
 		A216D5D75FC1C12B00EA579F /* JiggleMathTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JiggleMathTests.swift; sourceTree = "<group>"; };
 		A3A079141EE3396A0D619BED /* VigilTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VigilTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -111,7 +115,9 @@
 		D558645DED43326B339E8444 /* Vigil */ = {
 			isa = PBXGroup;
 			children = (
+				19F21EC18DEF6DD1419C77CD /* AppDelegate.swift */,
 				0D553674B7BB3EDDAB8A27B4 /* AppState.swift */,
+				827BB30803A8F9370287E8BA /* Assets.xcassets */,
 				5DE380C2090D4F71CAFDC883 /* BatteryGuardLogic.swift */,
 				5A7BA1FF4D54E88AAEBD64AF /* BatteryMonitor.swift */,
 				606F352CA703E53E8CBBCB8C /* JiggleController.swift */,
@@ -159,6 +165,7 @@
 			buildConfigurationList = D98D3580FD17823E379672D1 /* Build configuration list for PBXNativeTarget "Vigil" */;
 			buildPhases = (
 				1828E97C407825E91C7AC2AC /* Sources */,
+				5FFC7C189A36EBACC0770596 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -210,11 +217,23 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		5FFC7C189A36EBACC0770596 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0FBE101C48B281CA2A8A44C7 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		1828E97C407825E91C7AC2AC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				300B0FF924E1855F9AEBA70A /* AppDelegate.swift in Sources */,
 				E5E57DE9BB5F6FD0B4A21C3B /* AppState.swift in Sources */,
 				E0E1D4339267C37D776F11CF /* BatteryGuardLogic.swift in Sources */,
 				298A81C20F69881F7F0C1051 /* BatteryMonitor.swift in Sources */,

@@ -39,7 +39,7 @@ struct MenuContentView: View {
 
     private var header: some View {
         HStack(spacing: 8) {
-            Image(systemName: state.isAwake ? "eye.fill" : "eye")
+            Image(systemName: state.isAwake ? "eye.fill" : "eye.slash")
                 .font(.title3)
                 .foregroundStyle(state.isAwake ? Color.accentColor : .secondary)
             VStack(alignment: .leading, spacing: 2) {
