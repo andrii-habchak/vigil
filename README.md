@@ -21,6 +21,30 @@ Apple's public frameworks — **no third-party dependencies**.
 - macOS 26+
 - Xcode (latest). An Apple ID for signing is optional — ad-hoc "Sign to Run Locally" is supported.
 
+## Download & install
+
+CI ([`.github/workflows/build.yml`](.github/workflows/build.yml)) builds a DMG on every
+push and on version tags:
+
+- **Latest build:** GitHub ▸ **Actions** ▸ latest *Build DMG* run ▸ **Artifacts** ▸
+  `Vigil-dmg` (requires being signed in to GitHub).
+- **Tagged release:** push a tag and the DMG is attached to a public GitHub Release:
+  ```bash
+  git tag v0.1.0 && git push origin v0.1.0
+  ```
+  Then grab `Vigil.dmg` from the repo's **Releases** page.
+
+Open the DMG and drag **Vigil** to **Applications**. The build is **ad-hoc signed, not
+notarized**, so on first launch macOS Gatekeeper will warn — **right-click Vigil.app →
+Open** (once), or clear the quarantine flag:
+
+```bash
+xattr -dr com.apple.quarantine /Applications/Vigil.app
+```
+
+*(For a warning-free install you'd need an Apple Developer account and notarization —
+see [Notes & limitations](#notes--limitations).)*
+
 ## Build & run
 
 The Xcode project is generated from [`project.yml`](project.yml) with
@@ -73,6 +97,10 @@ GitHub account. Setup steps live in [docs/PLAN.md](docs/PLAN.md#phase-0--project
   synthetic-event mode behind an Accessibility opt-in is a possible future addition.
 - Vigil can't override MDM/managed-profile forced locks or critical/forced sleep (very low
   battery, lid close without external display, thermal).
+- **Distribution:** CI produces an **ad-hoc-signed, non-notarized** DMG (no Apple Developer
+  account required), which triggers a one-time Gatekeeper prompt. For a warning-free install,
+  add an Apple Developer ID certificate + notarization to the workflow (needs a paid account
+  and repo secrets for the cert, its password, and an app-specific/API-key credential).
 
 ## Design note
 

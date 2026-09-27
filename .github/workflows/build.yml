@@ -1,0 +1,97 @@
+name: Build DMG
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+# Needed for `gh release create` on tag builds.
+permissions:
+  contents: write
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    # macOS 26 runner: has the macOS 26 SDK / Xcode 26 that Vigil's deployment target
+    # needs. If this label is ever unavailable, switch to the newest macos-* image
+    # whose Xcode ships the macOS 26 SDK.
+    runs-on: macos-26
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Show toolchain
+        run: |
+          xcodebuild -version
+          swift --version
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate Xcode project
+        run: xcodegen generate --spec project.yml
+
+      - name: Build (Release, ad-hoc signed)
+        run: |
+          set -o pipefail
+          xcodebuild \
+            -project Vigil.xcodeproj \
+            -scheme Vigil \
+            -configuration Release \
+            -destination 'generic/platform=macOS' \
+            -derivedDataPath build \
+            CODE_SIGN_STYLE=Manual \
+            CODE_SIGN_IDENTITY="-" \
+            DEVELOPMENT_TEAM="" \
+            build
+
+      - name: Run tests
+        run: |
+          set -o pipefail
+          xcodebuild \
+            -project Vigil.xcodeproj \
+            -scheme Vigil \
+            -destination 'platform=macOS' \
+            -derivedDataPath build \
+            test
+
+      - name: Package DMG
+        run: |
+          set -euo pipefail
+          APP="build/Build/Products/Release/Vigil.app"
+          test -d "$APP" || { echo "::error::Vigil.app not found at $APP"; exit 1; }
+          STAGE="$(mktemp -d)"
+          cp -R "$APP" "$STAGE/"
+          ln -s /Applications "$STAGE/Applications"
+          mkdir -p dist
+          hdiutil create -volname "Vigil" -srcfolder "$STAGE" \
+            -ov -format UDZO dist/Vigil.dmg
+          shasum -a 256 dist/Vigil.dmg | tee dist/Vigil.dmg.sha256
+
+      - name: Upload DMG artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Vigil-dmg
+          path: |
+            dist/Vigil.dmg
+            dist/Vigil.dmg.sha256
+          if-no-files-found: error
+
+      - name: Attach DMG to release (tags only)
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          notes="Ad-hoc signed build (not notarized). On first launch: right-click Vigil.app → Open, or run \`xattr -dr com.apple.quarantine /Applications/Vigil.app\`."
+          gh release create "${GITHUB_REF_NAME}" \
+            dist/Vigil.dmg dist/Vigil.dmg.sha256 \
+            --title "Vigil ${GITHUB_REF_NAME}" \
+            --notes "$notes" \
+          || gh release upload "${GITHUB_REF_NAME}" \
+            dist/Vigil.dmg dist/Vigil.dmg.sha256 --clobber
