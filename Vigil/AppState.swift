@@ -161,6 +161,7 @@ final class AppState: ObservableObject {
             startCountdownTicker()
             updateRemaining()
         }
+        refreshBatteryPause()   // apply the guard now that a source wants awake
         reconcile()
 
         // If not battery-paused and the assertion still didn't take, it genuinely
@@ -184,6 +185,7 @@ final class AppState: ObservableObject {
         if active != scheduleActiveNow {
             scheduleActiveNow = active
         }
+        refreshBatteryPause()   // a newly-active window must respect the battery guard
         reconcile()
     }
 
@@ -197,14 +199,14 @@ final class AppState: ObservableObject {
 
     // MARK: - Battery guard
 
-    private func evaluateBattery() {
+    /// Update `batteryPaused` (and fire transition notifications) *without* reconciling.
+    /// Call this whenever `desiredAwake` may have just become true, then `reconcile()`,
+    /// so the guard applies immediately rather than only on the next power event.
+    private func refreshBatteryPause() {
         let snapshot = battery.snapshot()
         guard snapshot.hasBattery, let percentage = snapshot.percentage else {
             // No battery (desktop): never pause; clear any stale pause.
-            if batteryPaused {
-                batteryPaused = false
-                reconcile()
-            }
+            if batteryPaused { batteryPaused = false }
             return
         }
 
@@ -213,7 +215,6 @@ final class AppState: ObservableObject {
                                               percentage: percentage,
                                               threshold: batteryThreshold) {
                 batteryPaused = false
-                reconcile()
                 if desiredAwake {
                     notifications.post(title: "Vigil resumed",
                                        body: "Power restored — keeping your Mac awake again.")
@@ -224,11 +225,16 @@ final class AppState: ObservableObject {
                                                 percentage: percentage,
                                                 threshold: batteryThreshold) {
             batteryPaused = true
-            reconcile()
             notifications.post(title: "Vigil paused",
                                body: "Battery at \(percentage)% — paused to save power. "
                                    + "It resumes when you plug in.")
         }
+    }
+
+    /// Battery refresh from change events / threshold edits (updates + reconciles).
+    private func evaluateBattery() {
+        refreshBatteryPause()
+        reconcile()
     }
 
     // MARK: - Reconciliation

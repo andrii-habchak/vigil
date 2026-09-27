@@ -63,6 +63,17 @@ This repo is configured to use a **per-repo git identity** (not your global git 
 to push via a dedicated **SSH host alias**, so it stays fully separated from your other
 GitHub account. Setup steps live in [docs/PLAN.md](docs/PLAN.md#phase-0--project--repo-setup).
 
+## Notes & limitations
+
+- **Launch at login** is ON by default and registers the running app bundle via
+  `SMAppService`. For a dev build that's the transient DerivedData path — install Vigil to
+  `/Applications` for a stable login item, or toggle it off in Settings.
+- **Cursor jiggle** uses `CGWarpMouseCursorPosition` (no permission required). It moves the
+  pointer but doesn't post an input event, so some apps' idle timers may not reset. A
+  synthetic-event mode behind an Accessibility opt-in is a possible future addition.
+- Vigil can't override MDM/managed-profile forced locks or critical/forced sleep (very low
+  battery, lid close without external display, thermal).
+
 ## Design note
 
 Vigil uses only public Apple APIs (IOKit power assertions, CoreGraphics). It does **not**

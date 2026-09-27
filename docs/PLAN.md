@@ -87,16 +87,24 @@ git remote add origin git@github-<ALIAS>:<GITHUB_USER>/vigil.git
 
 ---
 
-## Phase 4 — Battery guard, login item, notifications, tests, polish
+## Phase 4 — Battery guard, login item, notifications, tests, polish ✅ done
 
-- `BatteryGuard` via `IOPSCopyPowerSourcesInfo`; configurable threshold; auto-stop + auto-resume.
-- `SMAppService` login item, default ON, Settings toggle.
-- `UserNotifications` for session end / low-battery / resume.
-- **Swift Testing** unit tests: schedule window calc (incl. tomorrow-roll and overnight
-  windows), duration/until math, battery-guard transitions.
-- Polish: icon state artwork, About, empty/error states.
-- **Acceptance:** battery cutoff stops + notifies and resumes on AC; login item registers
-  (visible in System Settings ▸ General ▸ Login Items); all tests pass.
+- ✅ `BatteryMonitor` via `IOPSCopyPowerSourcesInfo` + change notifications; `BatteryGuardLogic`
+  pure thresholds; configurable threshold; auto-pause + auto-resume (applied immediately on
+  session/schedule start, not just on power events).
+- ✅ `SMAppService` login item, default ON, Settings toggle.
+- ✅ `UserNotifications` for session end / low-battery pause / resume (opt-in).
+- ✅ `KeepAwakeDecision` pure function (manual OR schedule, battery-pause precedence).
+- ✅ **Swift Testing** unit tests: schedule window calc (tomorrow-roll + overnight), remaining
+  formatting, jiggle idle decision, battery-guard transitions, keep-awake decision — **30 tests**.
+- ✅ Polish: menu-bar icon states (eye / eye.fill / eye.slash-paused), paused banner, schedule banner.
+- ✅ **Acceptance met:** BUILD SUCCEEDED, TEST SUCCEEDED (30 tests); battery pause/resume wired
+  with notifications; login item registers via SMAppService.
+
+### Deferred / follow-ups
+- Jiggle uses `CGWarpMouseCursorPosition` (no permission); a synthetic-event mode behind an
+  Accessibility opt-in can be added if warping doesn't reset a given app's idle timer.
+- Active-popover mode switching (turn off before switching modes) — minor UX.
 
 ---
 
