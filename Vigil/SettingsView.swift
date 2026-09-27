@@ -40,9 +40,25 @@ struct SettingsView: View {
                 }
             }
             .disabled(!state.schedule.enabled)
+
+            Section {
+                Toggle("Jiggle the cursor while awake", isOn: $state.jiggleEnabled)
+                Stepper(value: $state.jiggleIntervalSeconds, in: 10...300, step: 5) {
+                    Text("Check every \(Int(state.jiggleIntervalSeconds))s")
+                }
+                .disabled(!state.jiggleEnabled)
+            } header: {
+                Text("Cursor jiggle")
+            } footer: {
+                Text("While Vigil is keeping the Mac awake and you've been idle, it nudges "
+                     + "the cursor 1px so pointer activity is registered. It never moves the "
+                     + "cursor while you're actively using it.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
         }
         .formStyle(.grouped)
-        .frame(width: 400, height: 380)
+        .frame(width: 400, height: 480)
     }
 
     private func dayToggle(_ day: Weekday) -> some View {

@@ -23,6 +23,10 @@ struct MenuContentView: View {
 
             Divider()
 
+            jiggleToggle
+
+            Divider()
+
             footer
         }
         .padding(14)
@@ -95,6 +99,14 @@ struct MenuContentView: View {
                 Button("Start") { state.startUntil() }
             }
         }
+    }
+
+    private var jiggleToggle: some View {
+        Toggle(isOn: $state.jiggleEnabled) {
+            Label("Jiggle cursor while awake", systemImage: "cursorarrow.motionlines")
+        }
+        .toggleStyle(.switch)
+        .font(.callout)
     }
 
     private var footer: some View {

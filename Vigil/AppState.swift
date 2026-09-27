@@ -19,11 +19,28 @@ final class AppState: ObservableObject {
         didSet { onScheduleChanged() }
     }
 
+    /// Whether the cursor jiggle is enabled; persisted. Active only while awake.
+    @Published var jiggleEnabled: Bool {
+        didSet {
+            store.saveJiggleEnabled(jiggleEnabled)
+            reconcileJiggle()
+        }
+    }
+
+    /// Jiggle check interval in seconds; persisted.
+    @Published var jiggleIntervalSeconds: Double {
+        didSet {
+            store.saveJiggleInterval(jiggleIntervalSeconds)
+            jiggle.interval = jiggleIntervalSeconds
+        }
+    }
+
     // Popover inputs (bound by the UI).
     @Published var durationHours: Double = 2.0
     @Published var untilTime: Date = Date().addingTimeInterval(3600)
 
     private let power = PowerAssertionManager()
+    private let jiggle = JiggleController()
     private let store: SettingsStore
     private var countdownTicker: Timer?
     private var scheduleTicker: Timer?
@@ -31,6 +48,9 @@ final class AppState: ObservableObject {
     init(store: SettingsStore = SettingsStore()) {
         self.store = store
         self.schedule = store.loadSchedule()
+        self.jiggleEnabled = store.loadJiggleEnabled()
+        self.jiggleIntervalSeconds = store.loadJiggleInterval()
+        jiggle.interval = jiggleIntervalSeconds
         evaluateSchedule()
         startScheduleTicker()
     }
@@ -133,12 +153,22 @@ final class AppState: ObservableObject {
 
     // MARK: - Power reconciliation
 
-    /// Bring the single power assertion in line with `desiredAwake`.
+    /// Bring the single power assertion in line with `desiredAwake`, then the jiggle.
     private func reconcile() {
         if desiredAwake {
             power.start(reason: "Vigil keeping the Mac awake")
         } else {
             power.stop()
+        }
+        reconcileJiggle()
+    }
+
+    /// Run the jiggle only while actually awake and enabled.
+    private func reconcileJiggle() {
+        if power.isActive && jiggleEnabled {
+            jiggle.start()
+        } else {
+            jiggle.stop()
         }
     }
 

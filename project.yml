@@ -42,6 +42,7 @@ targets:
       - Vigil/Weekday.swift
       - Vigil/ScheduleModel.swift
       - Vigil/ScheduleEvaluator.swift
+      - Vigil/JiggleMath.swift
     dependencies:
       - target: Vigil
     settings:
