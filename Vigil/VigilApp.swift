@@ -1,26 +1,22 @@
 import SwiftUI
-import AppKit
 
 /// Vigil — a menu-bar utility that keeps the Mac awake and can jiggle the cursor.
-///
-/// Phase 0: bare menu-bar agent (no Dock icon) with a placeholder menu and Quit.
-/// Keep-awake, session modes, schedule, jiggle, and battery guard land in later phases.
 @main
 struct VigilApp: App {
+    @StateObject private var state = AppState()
+
     var body: some Scene {
-        MenuBarExtra("Vigil", systemImage: "eye") {
-            Text("Vigil")
-                .font(.headline)
-            Text("Setup in progress — Phase 0")
-                .foregroundStyle(.secondary)
-
-            Divider()
-
-            Button("Quit Vigil") {
-                NSApplication.shared.terminate(nil)
+        MenuBarExtra {
+            MenuContentView()
+                .environmentObject(state)
+        } label: {
+            // Icon reflects state; timed sessions also show remaining time.
+            if let remaining = state.menuBarRemaining {
+                Label(remaining, systemImage: state.isAwake ? "eye.fill" : "eye")
+            } else {
+                Image(systemName: state.isAwake ? "eye.fill" : "eye")
             }
-            .keyboardShortcut("q")
         }
-        .menuBarExtraStyle(.menu)
+        .menuBarExtraStyle(.window)
     }
 }

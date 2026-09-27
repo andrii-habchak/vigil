@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		981B4FE620CADD2A07175309 /* VigilTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E992FE45E634A1DD98B8641 /* VigilTests.swift */; };
 		A490A563215339FC13C3BB73 /* VigilApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F426569E454D266888F2E7 /* VigilApp.swift */; };
+		C5D515E27E16BC0CB3C863E0 /* MenuContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AFC874F1EAEBC527A30C18 /* MenuContentView.swift */; };
+		C92700FCAFD8DC02127750DB /* PowerAssertionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C72E461A638DD08D0E0EF1 /* PowerAssertionManager.swift */; };
+		D7316F1CDF15DAB854B536A5 /* SessionMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ACE6D2416F4F1A6C28712FC /* SessionMode.swift */; };
+		D749A2018E055961420195F5 /* SessionMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E109CE26E9919B18E5204B2 /* SessionMath.swift */; };
+		E5E57DE9BB5F6FD0B4A21C3B /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D553674B7BB3EDDAB8A27B4 /* AppState.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -22,8 +27,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0D553674B7BB3EDDAB8A27B4 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		0E992FE45E634A1DD98B8641 /* VigilTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VigilTests.swift; sourceTree = "<group>"; };
+		4E109CE26E9919B18E5204B2 /* SessionMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionMath.swift; sourceTree = "<group>"; };
+		56C72E461A638DD08D0E0EF1 /* PowerAssertionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerAssertionManager.swift; sourceTree = "<group>"; };
+		6ACE6D2416F4F1A6C28712FC /* SessionMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionMode.swift; sourceTree = "<group>"; };
 		A3A079141EE3396A0D619BED /* VigilTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VigilTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A7AFC874F1EAEBC527A30C18 /* MenuContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuContentView.swift; sourceTree = "<group>"; };
 		B85D36572956AF65600CE196 /* Vigil.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vigil.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5F426569E454D266888F2E7 /* VigilApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VigilApp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -58,6 +68,11 @@
 		D558645DED43326B339E8444 /* Vigil */ = {
 			isa = PBXGroup;
 			children = (
+				0D553674B7BB3EDDAB8A27B4 /* AppState.swift */,
+				A7AFC874F1EAEBC527A30C18 /* MenuContentView.swift */,
+				56C72E461A638DD08D0E0EF1 /* PowerAssertionManager.swift */,
+				4E109CE26E9919B18E5204B2 /* SessionMath.swift */,
+				6ACE6D2416F4F1A6C28712FC /* SessionMode.swift */,
 				E5F426569E454D266888F2E7 /* VigilApp.swift */,
 			);
 			path = Vigil;
@@ -145,6 +160,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5E57DE9BB5F6FD0B4A21C3B /* AppState.swift in Sources */,
+				C5D515E27E16BC0CB3C863E0 /* MenuContentView.swift in Sources */,
+				C92700FCAFD8DC02127750DB /* PowerAssertionManager.swift in Sources */,
+				D749A2018E055961420195F5 /* SessionMath.swift in Sources */,
+				D7316F1CDF15DAB854B536A5 /* SessionMode.swift in Sources */,
 				A490A563215339FC13C3BB73 /* VigilApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
