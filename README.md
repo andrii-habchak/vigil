@@ -16,6 +16,25 @@ Apple's public frameworks — **no third-party dependencies**.
 - **Battery guard** — auto-stops at a configurable low-battery threshold and auto-resumes when power returns.
 - **Menu-bar only** — no Dock icon; optional launch at login.
 
+## Screenshots
+
+<table>
+  <tr>
+    <td align="center" valign="top">
+      <img src="docs/screenshots/popover.png" alt="Vigil menu-bar popover" width="280"><br>
+      <sub>Menu-bar popover — modes &amp; jiggle</sub>
+    </td>
+    <td align="center" valign="top">
+      <img src="docs/screenshots/settings-general.png" alt="Vigil Settings — general and schedule" width="300"><br>
+      <sub>Settings — general &amp; schedule</sub>
+    </td>
+    <td align="center" valign="top">
+      <img src="docs/screenshots/settings-jiggle.png" alt="Vigil Settings — days, time window and cursor jiggle" width="300"><br>
+      <sub>Settings — days, time window &amp; jiggle</sub>
+    </td>
+  </tr>
+</table>
+
 ## Requirements
 
 - macOS 26+
