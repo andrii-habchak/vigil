@@ -27,10 +27,12 @@ final class AppState: ObservableObject {
         }
     }
 
-    /// Jiggle check interval in seconds; persisted.
+    /// Jiggle check interval in seconds; persisted. The idle threshold tracks it, so a
+    /// single control means "if idle this long, nudge, and re-check this often".
     @Published var jiggleIntervalSeconds: Double {
         didSet {
             store.saveJiggleInterval(jiggleIntervalSeconds)
+            jiggle.idleThreshold = jiggleIntervalSeconds
             jiggle.interval = jiggleIntervalSeconds
         }
     }
@@ -51,6 +53,7 @@ final class AppState: ObservableObject {
         self.jiggleEnabled = store.loadJiggleEnabled()
         self.jiggleIntervalSeconds = store.loadJiggleInterval()
         jiggle.interval = jiggleIntervalSeconds
+        jiggle.idleThreshold = jiggleIntervalSeconds
         evaluateSchedule()
         startScheduleTicker()
     }

@@ -44,7 +44,7 @@ struct SettingsView: View {
             Section {
                 Toggle("Jiggle the cursor while awake", isOn: $state.jiggleEnabled)
                 Stepper(value: $state.jiggleIntervalSeconds, in: 10...300, step: 5) {
-                    Text("Check every \(Int(state.jiggleIntervalSeconds))s")
+                    Text("Nudge after \(Int(state.jiggleIntervalSeconds))s idle")
                 }
                 .disabled(!state.jiggleEnabled)
             } header: {
