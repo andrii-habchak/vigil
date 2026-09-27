@@ -116,7 +116,10 @@ final class AppState: ObservableObject {
     }
 
     private func evaluateSchedule() {
-        scheduleActiveNow = ScheduleEvaluator.isActive(schedule, at: Date())
+        let active = ScheduleEvaluator.isActive(schedule, at: Date())
+        if active != scheduleActiveNow {
+            scheduleActiveNow = active
+        }
         reconcile()
     }
 

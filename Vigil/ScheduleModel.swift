@@ -10,7 +10,11 @@ struct ScheduleModel: Codable, Equatable {
     var endMinutes: Int = 18 * 60     // 18:00
 
     /// True when the window crosses midnight (e.g. 22:00–06:00).
-    var isOvernight: Bool { endMinutes <= startMinutes }
+    var isOvernight: Bool { endMinutes < startMinutes }
+
+    /// True when start and end are equal, i.e. the window has zero length and never
+    /// activates (matches `ScheduleEvaluator`'s guard).
+    var isEmptyWindow: Bool { endMinutes == startMinutes }
 
     var daysText: String {
         Weekday.displayOrder.filter { days.contains($0) }.map(\.shortName).joined(separator: " ")

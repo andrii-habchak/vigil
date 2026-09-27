@@ -27,7 +27,12 @@ struct SettingsView: View {
             Section("Time window") {
                 DatePicker("Start", selection: startBinding, displayedComponents: .hourAndMinute)
                 DatePicker("End", selection: endBinding, displayedComponents: .hourAndMinute)
-                if state.schedule.isOvernight {
+                if state.schedule.isEmptyWindow {
+                    Label("Start and end are the same — this window never activates.",
+                          systemImage: "exclamationmark.triangle")
+                        .font(.caption)
+                        .foregroundStyle(.orange)
+                } else if state.schedule.isOvernight {
                     Label("Overnight window — it ends the following morning.",
                           systemImage: "moon.stars")
                         .font(.caption)
