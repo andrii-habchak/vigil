@@ -13,8 +13,11 @@ final class PowerAssertionManager {
     private(set) var isActive = false
 
     /// Create the assertion if not already held. Idempotent.
-    func start(reason: String) {
-        guard !isActive else { return }
+    /// - Returns: true if an assertion is now held (either newly created or already
+    ///   active); false if the assertion could not be created.
+    @discardableResult
+    func start(reason: String) -> Bool {
+        guard !isActive else { return true }
         var id = IOPMAssertionID(0)
         let result = IOPMAssertionCreateWithName(
             kIOPMAssertionTypePreventUserIdleDisplaySleep as CFString,
@@ -22,10 +25,10 @@ final class PowerAssertionManager {
             reason as CFString,
             &id
         )
-        if result == kIOReturnSuccess {
-            assertionID = id
-            isActive = true
-        }
+        guard result == kIOReturnSuccess else { return false }
+        assertionID = id
+        isActive = true
+        return true
     }
 
     /// Release the assertion if held. Idempotent.

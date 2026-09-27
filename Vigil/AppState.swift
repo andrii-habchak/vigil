@@ -67,16 +67,25 @@ final class AppState: ObservableObject {
     // MARK: - Internals
 
     private func begin(mode: ManualMode, end: Date?) {
+        // Only claim to be "On" if the assertion was actually created; otherwise
+        // stay Off rather than misreport (user-facing error surfacing comes with
+        // notifications in Phase 4).
+        guard power.start(reason: "Vigil keeping the Mac awake") else { return }
         activeSession = ActiveSession(mode: mode, endDate: end, startedAt: Date())
-        power.start(reason: "Vigil keeping the Mac awake")
-        startTicker()
-        tick()
+        if end == nil {
+            // Unlimited: no countdown, so no per-second ticker.
+            remaining = nil
+        } else {
+            startTicker()
+            tick()
+        }
     }
 
     private func startTicker() {
         stopTicker()
         let timer = Timer(timeInterval: 1, repeats: true) { [weak self] _ in
-            Task { @MainActor in self?.tick() }
+            // The timer fires on the main run loop, so we're already MainActor-isolated.
+            MainActor.assumeIsolated { self?.tick() }
         }
         RunLoop.main.add(timer, forMode: .common)
         ticker = timer

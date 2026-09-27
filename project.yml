@@ -36,6 +36,9 @@ targets:
     platform: macOS
     sources:
       - VigilTests
+      # Pure logic files compiled directly into the test bundle so it stays a
+      # host-less logic-test target (no need to launch the menu-bar app to test).
+      - Vigil/SessionMath.swift
     dependencies:
       - target: Vigil
     settings:
