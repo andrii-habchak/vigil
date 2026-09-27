@@ -1,0 +1,56 @@
+name: Vigil
+options:
+  bundleIdPrefix: io.github.andrii-habchak
+  deploymentTarget:
+    macOS: "26.0"
+  developmentLanguage: en
+  createIntermediateGroups: true
+  generateEmptyDirectories: true
+
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    MARKETING_VERSION: "0.1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    # Ad-hoc "Sign to Run Locally" — no Apple Developer team required.
+    CODE_SIGN_STYLE: Manual
+    CODE_SIGN_IDENTITY: "-"
+    DEVELOPMENT_TEAM: ""
+
+targets:
+  Vigil:
+    type: application
+    platform: macOS
+    sources:
+      - Vigil
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: io.github.andrii-habchak.Vigil
+        PRODUCT_NAME: Vigil
+        GENERATE_INFOPLIST_FILE: YES
+        # Menu-bar agent app: no Dock icon, no main window.
+        INFOPLIST_KEY_LSUIElement: YES
+
+  VigilTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - VigilTests
+    dependencies:
+      - target: Vigil
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: io.github.andrii-habchak.VigilTests
+        GENERATE_INFOPLIST_FILE: YES
+
+schemes:
+  Vigil:
+    build:
+      targets:
+        Vigil: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - VigilTests

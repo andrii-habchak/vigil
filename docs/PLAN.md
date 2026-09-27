@@ -21,13 +21,15 @@ gate to the next phase.
 
 ---
 
-## Phase 0 — Project & repo setup
+## Phase 0 — Project & repo setup ✅ done
 
-- Create Xcode app project **Vigil** (SwiftUI lifecycle, macOS 26 target, `LSUIElement = true`, ad-hoc signing).
-- Add `MenuBarExtra` scene with a placeholder icon + Quit.
-- Add `.gitignore` (Xcode/Swift/macOS).
-- `git init`; set **per-repo identity** and **SSH host-alias** remote (see below); initial commit.
-- **Acceptance:** build & run shows a menu-bar status item with a working Quit; no Dock icon.
+- ✅ Xcode app project **Vigil** generated via **XcodeGen** (`project.yml`): SwiftUI, macOS 26 target, `LSUIElement = true`, ad-hoc "Sign to Run Locally". Test target `VigilTests` (Swift Testing).
+- ✅ `MenuBarExtra` scene with a placeholder menu + Quit.
+- ✅ `.gitignore` (Xcode/Swift/macOS).
+- ✅ `git init`; **per-repo identity** + **SSH host-alias** remote (`github-vigil`); scaffold pushed.
+- ✅ **Acceptance met:** `xcodebuild … build` → BUILD SUCCEEDED; `xcodebuild … test` → TEST SUCCEEDED; built app's Info.plist has `LSUIElement = true`.
+
+> Note: we generate the project with XcodeGen rather than hand-managing `.xcodeproj`. `project.yml` is the source of truth; run `xcodegen generate` after adding files. The generated `Vigil.xcodeproj` is committed for direct opening.
 
 ### Git & separate-identity setup
 

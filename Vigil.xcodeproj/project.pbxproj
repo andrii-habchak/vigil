@@ -1,0 +1,401 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		981B4FE620CADD2A07175309 /* VigilTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E992FE45E634A1DD98B8641 /* VigilTests.swift */; };
+		A490A563215339FC13C3BB73 /* VigilApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F426569E454D266888F2E7 /* VigilApp.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		DDCC8931B5121BBC4DBFBF47 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2171B6E0E71429C80C35FBE9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6161E4DB5FF004CE4CB88A49;
+			remoteInfo = Vigil;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0E992FE45E634A1DD98B8641 /* VigilTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VigilTests.swift; sourceTree = "<group>"; };
+		A3A079141EE3396A0D619BED /* VigilTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VigilTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B85D36572956AF65600CE196 /* Vigil.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vigil.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E5F426569E454D266888F2E7 /* VigilApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VigilApp.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		992B83762E2C36747F2A9A79 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B85D36572956AF65600CE196 /* Vigil.app */,
+				A3A079141EE3396A0D619BED /* VigilTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9A7263839FC67DB70B23A6C6 /* VigilTests */ = {
+			isa = PBXGroup;
+			children = (
+				0E992FE45E634A1DD98B8641 /* VigilTests.swift */,
+			);
+			path = VigilTests;
+			sourceTree = "<group>";
+		};
+		BDC1E4C65901963933A40496 = {
+			isa = PBXGroup;
+			children = (
+				D558645DED43326B339E8444 /* Vigil */,
+				9A7263839FC67DB70B23A6C6 /* VigilTests */,
+				992B83762E2C36747F2A9A79 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D558645DED43326B339E8444 /* Vigil */ = {
+			isa = PBXGroup;
+			children = (
+				E5F426569E454D266888F2E7 /* VigilApp.swift */,
+			);
+			path = Vigil;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		53D580ABFFAC14CA00CBE7F5 /* VigilTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C04685F46C7642D3F64A63DD /* Build configuration list for PBXNativeTarget "VigilTests" */;
+			buildPhases = (
+				C785AC39878B4202E81C1BCA /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6F5EC6E5617F31443D8BA974 /* PBXTargetDependency */,
+			);
+			name = VigilTests;
+			packageProductDependencies = (
+			);
+			productName = VigilTests;
+			productReference = A3A079141EE3396A0D619BED /* VigilTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		6161E4DB5FF004CE4CB88A49 /* Vigil */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D98D3580FD17823E379672D1 /* Build configuration list for PBXNativeTarget "Vigil" */;
+			buildPhases = (
+				1828E97C407825E91C7AC2AC /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Vigil;
+			packageProductDependencies = (
+			);
+			productName = Vigil;
+			productReference = B85D36572956AF65600CE196 /* Vigil.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2171B6E0E71429C80C35FBE9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					53D580ABFFAC14CA00CBE7F5 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Manual;
+					};
+					6161E4DB5FF004CE4CB88A49 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Manual;
+					};
+				};
+			};
+			buildConfigurationList = BDE66036CD536BF92D34583E /* Build configuration list for PBXProject "Vigil" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = BDC1E4C65901963933A40496;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 992B83762E2C36747F2A9A79 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6161E4DB5FF004CE4CB88A49 /* Vigil */,
+				53D580ABFFAC14CA00CBE7F5 /* VigilTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1828E97C407825E91C7AC2AC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A490A563215339FC13C3BB73 /* VigilApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C785AC39878B4202E81C1BCA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				981B4FE620CADD2A07175309 /* VigilTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6F5EC6E5617F31443D8BA974 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6161E4DB5FF004CE4CB88A49 /* Vigil */;
+			targetProxy = DDCC8931B5121BBC4DBFBF47 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		27DCBA49F20453C32C5C74AE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "io.github.andrii-habchak.VigilTests";
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Vigil.app/Contents/MacOS/Vigil";
+			};
+			name = Release;
+		};
+		33E59D603E1AB052C033B287 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 0.1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		5D105B3329E5907F3DF91873 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSUIElement = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "io.github.andrii-habchak.Vigil";
+				PRODUCT_NAME = Vigil;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		5F14B2D9EE9F478A4B2129C1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSUIElement = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "io.github.andrii-habchak.Vigil";
+				PRODUCT_NAME = Vigil;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		642C963C4E0FB2B70D8A83F1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 0.1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		FC4BD5ACD04A427AF889A5CE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "io.github.andrii-habchak.VigilTests";
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Vigil.app/Contents/MacOS/Vigil";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BDE66036CD536BF92D34583E /* Build configuration list for PBXProject "Vigil" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				33E59D603E1AB052C033B287 /* Debug */,
+				642C963C4E0FB2B70D8A83F1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		C04685F46C7642D3F64A63DD /* Build configuration list for PBXNativeTarget "VigilTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FC4BD5ACD04A427AF889A5CE /* Debug */,
+				27DCBA49F20453C32C5C74AE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		D98D3580FD17823E379672D1 /* Build configuration list for PBXNativeTarget "Vigil" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5D105B3329E5907F3DF91873 /* Debug */,
+				5F14B2D9EE9F478A4B2129C1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2171B6E0E71429C80C35FBE9 /* Project object */;
+}

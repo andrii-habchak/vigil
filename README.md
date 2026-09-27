@@ -23,14 +23,34 @@ Apple's public frameworks — **no third-party dependencies**.
 
 ## Build & run
 
-The Xcode project is added in Phase 0 (see [docs/PLAN.md](docs/PLAN.md)). Once present:
+The Xcode project is generated from [`project.yml`](project.yml) with
+[XcodeGen](https://github.com/yonwoo9/XcodeGen); the resulting `Vigil.xcodeproj` is
+committed, so you can open it directly:
 
 ```bash
 open Vigil.xcodeproj
 ```
 
-Build & run in Xcode (⌘R). The app launches as a menu-bar agent — look for its icon
-near the clock, not in the Dock.
+Build & run in Xcode (⌘R). The app launches as a **menu-bar agent** — look for its icon
+near the clock, not in the Dock. Quit it from its own menu (⌘Q).
+
+### Terminal build / regenerate (optional)
+
+Regenerate the project after structural changes:
+
+```bash
+xcodegen generate
+```
+
+Build from the terminal (this Mac's `xcode-select` points at the Command Line Tools, so
+point at full Xcode for the build):
+
+```bash
+DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -scheme Vigil -destination 'platform=macOS' build
+```
+
+To make that permanent (needs your password):
+`sudo xcode-select -s /Applications/Xcode.app/Contents/Developer`.
 
 ## Project docs
 
