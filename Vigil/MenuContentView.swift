@@ -4,6 +4,7 @@ import AppKit
 /// The popover shown when the user clicks Vigil's menu-bar icon (`.window` style).
 struct MenuContentView: View {
     @EnvironmentObject var state: AppState
+    @Environment(\.openWindow) private var openWindow
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -11,19 +12,18 @@ struct MenuContentView: View {
 
             Divider()
 
-            if state.isAwake {
+            if state.activeManualSession != nil {
                 activeControls
             } else {
+                if state.scheduleActiveNow {
+                    scheduleBanner
+                }
                 idleControls
             }
 
             Divider()
 
-            HStack {
-                Spacer()
-                Button("Quit Vigil") { NSApplication.shared.terminate(nil) }
-                    .keyboardShortcut("q")
-            }
+            footer
         }
         .padding(14)
         .frame(width: 280)
@@ -44,13 +44,26 @@ struct MenuContentView: View {
 
     private var activeControls: some View {
         Button {
-            state.stop()
+            state.stopManual()
         } label: {
             Label("Turn off", systemImage: "stop.circle")
                 .frame(maxWidth: .infinity, alignment: .center)
         }
         .buttonStyle(.borderedProminent)
         .controlSize(.large)
+    }
+
+    private var scheduleBanner: some View {
+        HStack(spacing: 6) {
+            Image(systemName: "calendar.badge.clock")
+                .foregroundStyle(Color.accentColor)
+            Text("Awake by schedule (\(state.schedule.timeWindowText))")
+                .font(.caption)
+            Spacer()
+        }
+        .padding(8)
+        .background(Color.accentColor.opacity(0.12))
+        .clipShape(RoundedRectangle(cornerRadius: 6))
     }
 
     private var idleControls: some View {
@@ -82,6 +95,20 @@ struct MenuContentView: View {
                 Button("Start") { state.startUntil() }
             }
         }
+    }
+
+    private var footer: some View {
+        HStack {
+            Button("Settings…") { openSettings() }
+            Spacer()
+            Button("Quit Vigil") { NSApplication.shared.terminate(nil) }
+                .keyboardShortcut("q")
+        }
+    }
+
+    private func openSettings() {
+        openWindow(id: "settings")
+        NSApplication.shared.activate(ignoringOtherApps: true)
     }
 
     private var durationLabel: String {

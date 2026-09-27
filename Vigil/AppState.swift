@@ -2,112 +2,170 @@ import SwiftUI
 
 /// Single source of truth for Vigil's runtime state.
 ///
-/// Phase 1 scope: manual keep-awake sessions (unlimited / duration / until) driving a
-/// single IOKit power assertion, plus the derived text/icon the UI shows. Schedule,
-/// jiggle, and battery guard are layered on in later phases.
+/// The Mac is kept awake when **either** a manual session is running **or** the weekly
+/// schedule is currently in-window. A single `reconcile()` maps that desired state onto
+/// the one power assertion, so `isAwake` always reflects the real assertion.
 @MainActor
 final class AppState: ObservableObject {
-    /// The running manual session, or nil when Vigil is off.
-    @Published private(set) var activeSession: ActiveSession?
-    /// Seconds remaining for a timed session; nil for unlimited/off.
+    /// The running manual session, or nil when no manual session is active.
+    @Published private(set) var activeManualSession: ActiveSession?
+    /// Seconds remaining for a timed manual session; nil otherwise.
     @Published private(set) var remaining: TimeInterval?
+    /// Whether the schedule is currently within an active window.
+    @Published private(set) var scheduleActiveNow: Bool = false
+
+    /// The weekly schedule; persisted on every change.
+    @Published var schedule: ScheduleModel {
+        didSet { onScheduleChanged() }
+    }
 
     // Popover inputs (bound by the UI).
     @Published var durationHours: Double = 2.0
     @Published var untilTime: Date = Date().addingTimeInterval(3600)
 
     private let power = PowerAssertionManager()
-    private var ticker: Timer?
+    private let store: SettingsStore
+    private var countdownTicker: Timer?
+    private var scheduleTicker: Timer?
 
-    var isAwake: Bool { activeSession != nil }
-
-    /// Human-readable status for the popover header.
-    var statusText: String {
-        guard let session = activeSession else { return "Off" }
-        switch session.mode {
-        case .unlimited:
-            return "On — unlimited"
-        case .duration, .until:
-            if let end = session.endDate {
-                return "On — until \(Self.timeFormatter.string(from: end))"
-            }
-            return "On"
-        }
+    init(store: SettingsStore = SettingsStore()) {
+        self.store = store
+        self.schedule = store.loadSchedule()
+        evaluateSchedule()
+        startScheduleTicker()
     }
 
-    /// Compact remaining string for the menu-bar label, or nil when nothing to show.
+    // MARK: - Derived state
+
+    /// The real keep-awake state (reflects the actual power assertion).
+    var isAwake: Bool { power.isActive }
+
+    /// Whether the app *wants* to be awake, before the assertion is applied.
+    private var desiredAwake: Bool { activeManualSession != nil || scheduleActiveNow }
+
+    var statusText: String {
+        guard power.isActive else { return "Off" }
+        if let session = activeManualSession {
+            switch session.mode {
+            case .unlimited:
+                return "On — unlimited"
+            case .duration, .until:
+                if let end = session.endDate {
+                    return "On — until \(Self.timeFormatter.string(from: end))"
+                }
+                return "On"
+            }
+        }
+        if scheduleActiveNow { return "On — schedule" }
+        return "On"
+    }
+
     var menuBarRemaining: String? {
         guard let remaining else { return nil }
         return SessionMath.menuBarRemaining(remaining)
     }
 
-    // MARK: - Start / stop
+    // MARK: - Manual sessions
 
     func startUnlimited() {
-        begin(mode: .unlimited, end: nil)
+        beginManual(mode: .unlimited, end: nil)
     }
 
     func startDuration() {
         let hours = max(0.5, durationHours)
-        begin(mode: .duration(hours: hours), end: Date().addingTimeInterval(hours * 3600))
+        beginManual(mode: .duration(hours: hours), end: Date().addingTimeInterval(hours * 3600))
     }
 
     func startUntil() {
         let end = SessionMath.nextOccurrence(matching: untilTime, after: Date())
-        begin(mode: .until(end), end: end)
+        beginManual(mode: .until(end), end: end)
     }
 
-    func stop() {
-        activeSession = nil
+    /// Stop the manual session. Keep-awake continues if the schedule is still in-window.
+    func stopManual() {
+        activeManualSession = nil
         remaining = nil
-        power.stop()
-        stopTicker()
+        stopCountdownTicker()
+        reconcile()
     }
 
-    // MARK: - Internals
-
-    private func begin(mode: ManualMode, end: Date?) {
-        // Only claim to be "On" if the assertion was actually created; otherwise
-        // stay Off rather than misreport (user-facing error surfacing comes with
-        // notifications in Phase 4).
-        guard power.start(reason: "Vigil keeping the Mac awake") else { return }
-        activeSession = ActiveSession(mode: mode, endDate: end, startedAt: Date())
+    private func beginManual(mode: ManualMode, end: Date?) {
+        activeManualSession = ActiveSession(mode: mode, endDate: end, startedAt: Date())
         if end == nil {
-            // Unlimited: no countdown, so no per-second ticker.
             remaining = nil
+            stopCountdownTicker()
         } else {
-            startTicker()
-            tick()
+            startCountdownTicker()
+            updateRemaining()
+        }
+        reconcile()
+
+        // If the assertion could not be created, don't keep a phantom session.
+        if !power.isActive {
+            activeManualSession = nil
+            remaining = nil
+            stopCountdownTicker()
         }
     }
 
-    private func startTicker() {
-        stopTicker()
-        let timer = Timer(timeInterval: 1, repeats: true) { [weak self] _ in
-            // The timer fires on the main run loop, so we're already MainActor-isolated.
-            MainActor.assumeIsolated { self?.tick() }
+    // MARK: - Schedule
+
+    private func onScheduleChanged() {
+        store.saveSchedule(schedule)
+        evaluateSchedule()
+    }
+
+    private func evaluateSchedule() {
+        scheduleActiveNow = ScheduleEvaluator.isActive(schedule, at: Date())
+        reconcile()
+    }
+
+    private func startScheduleTicker() {
+        let timer = Timer(timeInterval: 30, repeats: true) { [weak self] _ in
+            MainActor.assumeIsolated { self?.evaluateSchedule() }
         }
         RunLoop.main.add(timer, forMode: .common)
-        ticker = timer
+        scheduleTicker = timer
     }
 
-    private func stopTicker() {
-        ticker?.invalidate()
-        ticker = nil
-    }
+    // MARK: - Power reconciliation
 
-    private func tick() {
-        guard let session = activeSession else { return }
-        if let end = session.endDate {
-            let left = end.timeIntervalSinceNow
-            if left <= 0 {
-                stop()
-                return
-            }
-            remaining = left
+    /// Bring the single power assertion in line with `desiredAwake`.
+    private func reconcile() {
+        if desiredAwake {
+            power.start(reason: "Vigil keeping the Mac awake")
         } else {
-            remaining = nil
+            power.stop()
         }
+    }
+
+    // MARK: - Countdown
+
+    private func startCountdownTicker() {
+        stopCountdownTicker()
+        let timer = Timer(timeInterval: 1, repeats: true) { [weak self] _ in
+            MainActor.assumeIsolated { self?.updateRemaining() }
+        }
+        RunLoop.main.add(timer, forMode: .common)
+        countdownTicker = timer
+    }
+
+    private func stopCountdownTicker() {
+        countdownTicker?.invalidate()
+        countdownTicker = nil
+    }
+
+    private func updateRemaining() {
+        guard let session = activeManualSession, let end = session.endDate else {
+            remaining = nil
+            return
+        }
+        let left = end.timeIntervalSinceNow
+        if left <= 0 {
+            stopManual()
+            return
+        }
+        remaining = left
     }
 
     private static let timeFormatter: DateFormatter = {

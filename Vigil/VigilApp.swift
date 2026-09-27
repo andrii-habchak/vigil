@@ -18,5 +18,11 @@ struct VigilApp: App {
             }
         }
         .menuBarExtraStyle(.window)
+
+        Window("Vigil Settings", id: "settings") {
+            SettingsView()
+                .environmentObject(state)
+        }
+        .windowResizability(.contentSize)
     }
 }

@@ -7,14 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2718FAFE8DEDCA9DE112205C /* Weekday.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA62B82C6ECAF91DF0644175 /* Weekday.swift */; };
 		28231BA7CC5DCA7827A86C69 /* SessionMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E109CE26E9919B18E5204B2 /* SessionMath.swift */; };
+		429E600BDA33C64A8B11E21A /* ScheduleEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D470B5E801CF3D0EEF1934 /* ScheduleEvaluator.swift */; };
+		4A11EBE39ADBFAF8B72F00DC /* Weekday.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA62B82C6ECAF91DF0644175 /* Weekday.swift */; };
+		5814976374DD46924251A020 /* ScheduleEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D470B5E801CF3D0EEF1934 /* ScheduleEvaluator.swift */; };
+		84A274EB24AFFD5C9CA7B069 /* ScheduleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F6C5F236793DFFA8B755F8 /* ScheduleModel.swift */; };
 		981B4FE620CADD2A07175309 /* VigilTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E992FE45E634A1DD98B8641 /* VigilTests.swift */; };
+		994D77EB12FB25849C77AF33 /* ScheduleEvaluatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6635157D1BA2028861CAB075 /* ScheduleEvaluatorTests.swift */; };
+		9E5C32BCD81355C21C8ADE18 /* ScheduleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F6C5F236793DFFA8B755F8 /* ScheduleModel.swift */; };
 		A490A563215339FC13C3BB73 /* VigilApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F426569E454D266888F2E7 /* VigilApp.swift */; };
 		C5D515E27E16BC0CB3C863E0 /* MenuContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AFC874F1EAEBC527A30C18 /* MenuContentView.swift */; };
 		C92700FCAFD8DC02127750DB /* PowerAssertionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C72E461A638DD08D0E0EF1 /* PowerAssertionManager.swift */; };
 		D7316F1CDF15DAB854B536A5 /* SessionMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ACE6D2416F4F1A6C28712FC /* SessionMode.swift */; };
 		D749A2018E055961420195F5 /* SessionMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E109CE26E9919B18E5204B2 /* SessionMath.swift */; };
+		E4FE5DDF3902254FECE8D6E1 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D008F4F4032B0D87E52B11 /* SettingsView.swift */; };
 		E5E57DE9BB5F6FD0B4A21C3B /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D553674B7BB3EDDAB8A27B4 /* AppState.swift */; };
+		FE8435EF19EC16572F7DBABC /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0F1D1BF3B2A1998BE4B2BA /* SettingsStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,13 +39,19 @@
 /* Begin PBXFileReference section */
 		0D553674B7BB3EDDAB8A27B4 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		0E992FE45E634A1DD98B8641 /* VigilTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VigilTests.swift; sourceTree = "<group>"; };
+		18D470B5E801CF3D0EEF1934 /* ScheduleEvaluator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEvaluator.swift; sourceTree = "<group>"; };
+		35D008F4F4032B0D87E52B11 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		4E109CE26E9919B18E5204B2 /* SessionMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionMath.swift; sourceTree = "<group>"; };
 		56C72E461A638DD08D0E0EF1 /* PowerAssertionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerAssertionManager.swift; sourceTree = "<group>"; };
+		6635157D1BA2028861CAB075 /* ScheduleEvaluatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEvaluatorTests.swift; sourceTree = "<group>"; };
 		6ACE6D2416F4F1A6C28712FC /* SessionMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionMode.swift; sourceTree = "<group>"; };
 		A3A079141EE3396A0D619BED /* VigilTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VigilTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7AFC874F1EAEBC527A30C18 /* MenuContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuContentView.swift; sourceTree = "<group>"; };
+		AA62B82C6ECAF91DF0644175 /* Weekday.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weekday.swift; sourceTree = "<group>"; };
+		AC0F1D1BF3B2A1998BE4B2BA /* SettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStore.swift; sourceTree = "<group>"; };
 		B85D36572956AF65600CE196 /* Vigil.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vigil.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5F426569E454D266888F2E7 /* VigilApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VigilApp.swift; sourceTree = "<group>"; };
+		F7F6C5F236793DFFA8B755F8 /* ScheduleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -52,6 +67,7 @@
 		9A7263839FC67DB70B23A6C6 /* VigilTests */ = {
 			isa = PBXGroup;
 			children = (
+				6635157D1BA2028861CAB075 /* ScheduleEvaluatorTests.swift */,
 				0E992FE45E634A1DD98B8641 /* VigilTests.swift */,
 			);
 			path = VigilTests;
@@ -72,9 +88,14 @@
 				0D553674B7BB3EDDAB8A27B4 /* AppState.swift */,
 				A7AFC874F1EAEBC527A30C18 /* MenuContentView.swift */,
 				56C72E461A638DD08D0E0EF1 /* PowerAssertionManager.swift */,
+				18D470B5E801CF3D0EEF1934 /* ScheduleEvaluator.swift */,
+				F7F6C5F236793DFFA8B755F8 /* ScheduleModel.swift */,
 				4E109CE26E9919B18E5204B2 /* SessionMath.swift */,
 				6ACE6D2416F4F1A6C28712FC /* SessionMode.swift */,
+				AC0F1D1BF3B2A1998BE4B2BA /* SettingsStore.swift */,
+				35D008F4F4032B0D87E52B11 /* SettingsView.swift */,
 				E5F426569E454D266888F2E7 /* VigilApp.swift */,
+				AA62B82C6ECAF91DF0644175 /* Weekday.swift */,
 			);
 			path = Vigil;
 			sourceTree = "<group>";
@@ -164,9 +185,14 @@
 				E5E57DE9BB5F6FD0B4A21C3B /* AppState.swift in Sources */,
 				C5D515E27E16BC0CB3C863E0 /* MenuContentView.swift in Sources */,
 				C92700FCAFD8DC02127750DB /* PowerAssertionManager.swift in Sources */,
+				429E600BDA33C64A8B11E21A /* ScheduleEvaluator.swift in Sources */,
+				84A274EB24AFFD5C9CA7B069 /* ScheduleModel.swift in Sources */,
 				D749A2018E055961420195F5 /* SessionMath.swift in Sources */,
 				D7316F1CDF15DAB854B536A5 /* SessionMode.swift in Sources */,
+				FE8435EF19EC16572F7DBABC /* SettingsStore.swift in Sources */,
+				E4FE5DDF3902254FECE8D6E1 /* SettingsView.swift in Sources */,
 				A490A563215339FC13C3BB73 /* VigilApp.swift in Sources */,
+				4A11EBE39ADBFAF8B72F00DC /* Weekday.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -174,8 +200,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5814976374DD46924251A020 /* ScheduleEvaluator.swift in Sources */,
+				994D77EB12FB25849C77AF33 /* ScheduleEvaluatorTests.swift in Sources */,
+				9E5C32BCD81355C21C8ADE18 /* ScheduleModel.swift in Sources */,
 				28231BA7CC5DCA7827A86C69 /* SessionMath.swift in Sources */,
 				981B4FE620CADD2A07175309 /* VigilTests.swift in Sources */,
+				2718FAFE8DEDCA9DE112205C /* Weekday.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
