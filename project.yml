@@ -43,6 +43,8 @@ targets:
       - Vigil/ScheduleModel.swift
       - Vigil/ScheduleEvaluator.swift
       - Vigil/JiggleMath.swift
+      - Vigil/BatteryGuardLogic.swift
+      - Vigil/KeepAwakeDecision.swift
     dependencies:
       - target: Vigil
     settings:

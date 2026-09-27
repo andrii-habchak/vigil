@@ -12,10 +12,14 @@ struct MenuContentView: View {
 
             Divider()
 
+            if state.isPausedForBattery {
+                pausedBanner
+            }
+
             if state.activeManualSession != nil {
                 activeControls
             } else {
-                if state.scheduleActiveNow {
+                if state.scheduleActiveNow && !state.isPausedForBattery {
                     scheduleBanner
                 }
                 idleControls
@@ -55,6 +59,19 @@ struct MenuContentView: View {
         }
         .buttonStyle(.borderedProminent)
         .controlSize(.large)
+    }
+
+    private var pausedBanner: some View {
+        HStack(spacing: 6) {
+            Image(systemName: "battery.25")
+                .foregroundStyle(.orange)
+            Text("Paused — low battery. Resumes when you plug in.")
+                .font(.caption)
+            Spacer()
+        }
+        .padding(8)
+        .background(Color.orange.opacity(0.12))
+        .clipShape(RoundedRectangle(cornerRadius: 6))
     }
 
     private var scheduleBanner: some View {

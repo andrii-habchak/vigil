@@ -7,6 +7,20 @@ struct SettingsView: View {
     var body: some View {
         Form {
             Section {
+                Toggle("Launch at login", isOn: $state.launchAtLogin)
+                Stepper(value: $state.batteryThreshold, in: 5...50, step: 5) {
+                    Text("Pause on battery below \(state.batteryThreshold)%")
+                }
+            } header: {
+                Text("General")
+            } footer: {
+                Text("On battery below this level, Vigil pauses keeping the Mac awake and "
+                     + "resumes automatically when you plug in.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+
+            Section {
                 Toggle("Enable weekly schedule", isOn: $state.schedule.enabled)
             } footer: {
                 Text("When enabled, Vigil keeps the Mac awake during the days and time "
@@ -58,7 +72,7 @@ struct SettingsView: View {
             }
         }
         .formStyle(.grouped)
-        .frame(width: 400, height: 480)
+        .frame(width: 400, height: 560)
     }
 
     private func dayToggle(_ day: Weekday) -> some View {

@@ -8,10 +8,14 @@ final class SettingsStore {
         static let schedule = "vigil.schedule"
         static let jiggleEnabled = "vigil.jiggleEnabled"
         static let jiggleInterval = "vigil.jiggleIntervalSeconds"
+        static let batteryThreshold = "vigil.batteryThreshold"
+        static let launchAtLogin = "vigil.launchAtLogin"
     }
 
     /// Default jiggle interval when nothing is stored yet.
     static let defaultJiggleInterval: Double = 30
+    /// Default low-battery pause threshold (percent).
+    static let defaultBatteryThreshold = 10
 
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
@@ -45,5 +49,27 @@ final class SettingsStore {
 
     func saveJiggleInterval(_ seconds: Double) {
         defaults.set(seconds, forKey: Key.jiggleInterval)
+    }
+
+    func loadBatteryThreshold() -> Int {
+        guard defaults.object(forKey: Key.batteryThreshold) != nil else {
+            return Self.defaultBatteryThreshold
+        }
+        return defaults.integer(forKey: Key.batteryThreshold)
+    }
+
+    func saveBatteryThreshold(_ percent: Int) {
+        defaults.set(percent, forKey: Key.batteryThreshold)
+    }
+
+    func loadLaunchAtLogin() -> Bool {
+        guard defaults.object(forKey: Key.launchAtLogin) != nil else {
+            return true // ON by default so the schedule runs
+        }
+        return defaults.bool(forKey: Key.launchAtLogin)
+    }
+
+    func saveLaunchAtLogin(_ enabled: Bool) {
+        defaults.set(enabled, forKey: Key.launchAtLogin)
     }
 }

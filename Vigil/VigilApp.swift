@@ -10,11 +10,12 @@ struct VigilApp: App {
             MenuContentView()
                 .environmentObject(state)
         } label: {
-            // Icon reflects state; timed sessions also show remaining time.
+            // Icon reflects state (awake / off / battery-paused); timed sessions
+            // also show remaining time.
             if let remaining = state.menuBarRemaining {
-                Label(remaining, systemImage: state.isAwake ? "eye.fill" : "eye")
+                Label(remaining, systemImage: state.menuBarSymbol)
             } else {
-                Image(systemName: state.isAwake ? "eye.fill" : "eye")
+                Image(systemName: state.menuBarSymbol)
             }
         }
         .menuBarExtraStyle(.window)

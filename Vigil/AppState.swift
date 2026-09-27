@@ -3,16 +3,16 @@ import SwiftUI
 /// Single source of truth for Vigil's runtime state.
 ///
 /// The Mac is kept awake when **either** a manual session is running **or** the weekly
-/// schedule is currently in-window. A single `reconcile()` maps that desired state onto
-/// the one power assertion, so `isAwake` always reflects the real assertion.
+/// schedule is in-window — unless the low-battery guard has paused everything. A single
+/// `reconcile()` maps that decision onto one power assertion (and the jiggle), so
+/// `isAwake` always reflects the real assertion.
 @MainActor
 final class AppState: ObservableObject {
-    /// The running manual session, or nil when no manual session is active.
     @Published private(set) var activeManualSession: ActiveSession?
-    /// Seconds remaining for a timed manual session; nil otherwise.
     @Published private(set) var remaining: TimeInterval?
-    /// Whether the schedule is currently within an active window.
-    @Published private(set) var scheduleActiveNow: Bool = false
+    @Published private(set) var scheduleActiveNow = false
+    /// True when keep-awake is suspended because of low battery.
+    @Published private(set) var batteryPaused = false
 
     /// The weekly schedule; persisted on every change.
     @Published var schedule: ScheduleModel {
@@ -27,13 +27,28 @@ final class AppState: ObservableObject {
         }
     }
 
-    /// Jiggle check interval in seconds; persisted. The idle threshold tracks it, so a
-    /// single control means "if idle this long, nudge, and re-check this often".
+    /// Jiggle interval in seconds; persisted. The idle threshold tracks it.
     @Published var jiggleIntervalSeconds: Double {
         didSet {
             store.saveJiggleInterval(jiggleIntervalSeconds)
             jiggle.idleThreshold = jiggleIntervalSeconds
             jiggle.interval = jiggleIntervalSeconds
+        }
+    }
+
+    /// Low-battery pause threshold (percent); persisted.
+    @Published var batteryThreshold: Int {
+        didSet {
+            store.saveBatteryThreshold(batteryThreshold)
+            evaluateBattery()
+        }
+    }
+
+    /// Launch-at-login preference; persisted and applied to the system.
+    @Published var launchAtLogin: Bool {
+        didSet {
+            store.saveLaunchAtLogin(launchAtLogin)
+            loginItem.setEnabled(launchAtLogin)
         }
     }
 
@@ -43,6 +58,9 @@ final class AppState: ObservableObject {
 
     private let power = PowerAssertionManager()
     private let jiggle = JiggleController()
+    private let battery = BatteryMonitor()
+    private let loginItem = LoginItemManager()
+    private let notifications = NotificationManager()
     private let store: SettingsStore
     private var countdownTicker: Timer?
     private var scheduleTicker: Timer?
@@ -52,9 +70,22 @@ final class AppState: ObservableObject {
         self.schedule = store.loadSchedule()
         self.jiggleEnabled = store.loadJiggleEnabled()
         self.jiggleIntervalSeconds = store.loadJiggleInterval()
+        self.batteryThreshold = store.loadBatteryThreshold()
+        self.launchAtLogin = store.loadLaunchAtLogin()
+
         jiggle.interval = jiggleIntervalSeconds
         jiggle.idleThreshold = jiggleIntervalSeconds
-        evaluateSchedule()
+
+        notifications.requestAuthorization()
+        loginItem.syncOnLaunch(desired: launchAtLogin)
+
+        battery.onChange = { [weak self] in
+            MainActor.assumeIsolated { self?.evaluateBattery() }
+        }
+        battery.start()
+
+        evaluateBattery()   // may set batteryPaused before the first reconcile
+        evaluateSchedule()  // reconciles
         startScheduleTicker()
     }
 
@@ -63,10 +94,14 @@ final class AppState: ObservableObject {
     /// The real keep-awake state (reflects the actual power assertion).
     var isAwake: Bool { power.isActive }
 
-    /// Whether the app *wants* to be awake, before the assertion is applied.
+    /// Whether a source wants keep-awake, before the battery guard is applied.
     private var desiredAwake: Bool { activeManualSession != nil || scheduleActiveNow }
 
+    /// True when a source wants keep-awake but the battery guard has paused it.
+    var isPausedForBattery: Bool { batteryPaused && desiredAwake }
+
     var statusText: String {
+        if isPausedForBattery { return "Paused — low battery" }
         guard power.isActive else { return "Off" }
         if let session = activeManualSession {
             switch session.mode {
@@ -81,6 +116,11 @@ final class AppState: ObservableObject {
         }
         if scheduleActiveNow { return "On — schedule" }
         return "On"
+    }
+
+    var menuBarSymbol: String {
+        if isPausedForBattery { return "eye.slash" }
+        return power.isActive ? "eye.fill" : "eye"
     }
 
     var menuBarRemaining: String? {
@@ -123,8 +163,9 @@ final class AppState: ObservableObject {
         }
         reconcile()
 
-        // If the assertion could not be created, don't keep a phantom session.
-        if !power.isActive {
+        // If not battery-paused and the assertion still didn't take, it genuinely
+        // failed — don't keep a phantom session.
+        if !batteryPaused && !power.isActive {
             activeManualSession = nil
             remaining = nil
             stopCountdownTicker()
@@ -154,11 +195,51 @@ final class AppState: ObservableObject {
         scheduleTicker = timer
     }
 
-    // MARK: - Power reconciliation
+    // MARK: - Battery guard
 
-    /// Bring the single power assertion in line with `desiredAwake`, then the jiggle.
+    private func evaluateBattery() {
+        let snapshot = battery.snapshot()
+        guard snapshot.hasBattery, let percentage = snapshot.percentage else {
+            // No battery (desktop): never pause; clear any stale pause.
+            if batteryPaused {
+                batteryPaused = false
+                reconcile()
+            }
+            return
+        }
+
+        if batteryPaused {
+            if BatteryGuardLogic.shouldResume(isOnAC: snapshot.isOnAC,
+                                              percentage: percentage,
+                                              threshold: batteryThreshold) {
+                batteryPaused = false
+                reconcile()
+                if desiredAwake {
+                    notifications.post(title: "Vigil resumed",
+                                       body: "Power restored — keeping your Mac awake again.")
+                }
+            }
+        } else if desiredAwake,
+                  BatteryGuardLogic.shouldPause(isOnAC: snapshot.isOnAC,
+                                                percentage: percentage,
+                                                threshold: batteryThreshold) {
+            batteryPaused = true
+            reconcile()
+            notifications.post(title: "Vigil paused",
+                               body: "Battery at \(percentage)% — paused to save power. "
+                                   + "It resumes when you plug in.")
+        }
+    }
+
+    // MARK: - Reconciliation
+
     private func reconcile() {
-        if desiredAwake {
+        let effective = KeepAwakeDecision.effectiveAwake(
+            manualActive: activeManualSession != nil,
+            scheduleActive: scheduleActiveNow,
+            batteryPaused: batteryPaused
+        )
+        if effective {
             power.start(reason: "Vigil keeping the Mac awake")
         } else {
             power.stop()
@@ -166,7 +247,6 @@ final class AppState: ObservableObject {
         reconcileJiggle()
     }
 
-    /// Run the jiggle only while actually awake and enabled.
     private func reconcileJiggle() {
         if power.isActive && jiggleEnabled {
             jiggle.start()
@@ -198,7 +278,11 @@ final class AppState: ObservableObject {
         }
         let left = end.timeIntervalSinceNow
         if left <= 0 {
-            stopManual()
+            activeManualSession = nil
+            remaining = nil
+            stopCountdownTicker()
+            reconcile()
+            notifications.post(title: "Vigil", body: "Your timed session has ended.")
             return
         }
         remaining = left
